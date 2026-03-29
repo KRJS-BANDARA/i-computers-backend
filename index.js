@@ -7,11 +7,13 @@ import jwt from "jsonwebtoken"
 import e from 'express'
 import authenticate from './controllers/middleWares/authenticate.js'
 import productRouter from './routers/product router.js'
-
+import dotenv from 'dotenv'
 
 const app = express()
 
-const mongoDBURI = "mongodb+srv://admin:Jayantha19740915@cluster0.o1ywdc4.mongodb.net/?appName=Cluster0"
+dotenv.config()
+
+const mongoDBURI = process.env.MONGO_URI
 
 mongoose.connect(mongoDBURI).then(
     ()=>{

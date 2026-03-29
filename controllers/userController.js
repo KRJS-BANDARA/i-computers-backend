@@ -2,6 +2,9 @@
 import User from "../models/user.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+
+dotenv.config()
 export async function createUser(req, res) {
     try {
         const user = await User.findOne({ email: req.body.email })
@@ -52,7 +55,7 @@ export async function loginUser(req, res) {
                     isEmailVerified: user.isEmailVerified,
                     image: user.image
                 },
-                "secretKey1974"
+                process.env.JWT_SECRET_KEY
             )
             res.status(200).json({ message: "User authenticated successfully", token: token })
             console.log(token)
