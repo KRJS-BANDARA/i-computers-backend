@@ -8,13 +8,9 @@ productRouter.post("/", createProduct)
 
 productRouter.get("/", getAllProducts)
 
-
-
 productRouter.get("/search", (req, res) => {
     res.status(200).json({ message: "Search endpoint" })
 })
-
-
 
 productRouter.get("/:productId", getProductById)
 
