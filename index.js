@@ -6,8 +6,10 @@ import userRouter from './routers/userRouter.js'
 import jwt from "jsonwebtoken"
 import e from 'express'
 import authenticate from './controllers/middleWares/authenticate.js'
-import productRouter from './routers/product router.js'
+import productRouter from './routers/productRouter.js'
 import dotenv from 'dotenv'
+import cors from 'cors'
+import orderRouter from './routers/orderRouter.js'
 
 const app = express()
 
@@ -20,6 +22,7 @@ mongoose.connect(mongoDBURI).then(
         console.log('Connected to MongoDB successfully!')
         }
     )
+app.use(cors());     
 
 app.use(express.json())
 
@@ -27,9 +30,11 @@ app.use(authenticate)
 
 app.use("/students", studentRouter)
 
-app.use("/users", userRouter)
+app.use("/api/users", userRouter)
 
-app.use("/products", productRouter)
+app.use("/api/products", productRouter)
+
+app.use("/api/orders", orderRouter)
 
 let port = 3000
 

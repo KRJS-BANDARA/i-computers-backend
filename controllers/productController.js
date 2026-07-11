@@ -24,6 +24,7 @@ export async function createProduct(req, res) {
 }
 
 export async function getAllProducts(req, res) {
+    console.log("Products are fetching...")
     try {
         if (req.user && req.user.isAdmin) {
 
@@ -102,3 +103,24 @@ export async function getProductById(req, res) {
         res.status(500).json({ message: error.message })
     }
 }
+
+export async function searchProducts(req, res) {
+        try {
+           const query = req.params.query
+           const products = await Product.find(
+            {   $or: [
+                    {name: { $regex: query, $options: "i" }},
+                    {description: { $regex: query, $options: "i" }},
+                    {altNames: { $elemMatch: { $regex: query, $options: "i" }}}
+            ],
+                isAvailable: true
+        }
+            
+        )
+        res.status(200).json(products)
+    
+
+        } catch (error) {
+            res.status(500).json({ message: error.message })
+        }
+    }
